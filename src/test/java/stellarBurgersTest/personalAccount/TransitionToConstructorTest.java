@@ -1,8 +1,5 @@
 package stellarBurgersTest.personalAccount;
 
-import api.User;
-import api.UserAPI;
-import com.github.javafaker.Faker;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,27 +9,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import stellarBurgers.AuthPage;
-import stellarBurgers.ConstructorPage;
-import stellarBurgers.PersonalAccountPage;
+import site.nomoreparties.stellarburgers.pages.AuthPage;
+import site.nomoreparties.stellarburgers.pages.ConstructorPage;
+import site.nomoreparties.stellarburgers.pages.PersonalAccountPage;
+import stellarBurgersTest.DefaultTest;
 
 import java.util.concurrent.TimeUnit;
 
 @RunWith(Parameterized.class)
-public class TransitionToConstructorTest {
-
-    private final Faker faker = new Faker();
-    private final String BASEURL = "https://stellarburgers.nomoreparties.site/";
-    private WebDriver driver;
-
-
-    private final String name = faker.name().firstName();
-    private final String email = faker.name().username() + "@bom.com";
-    private final String password = faker.random().hex();
-
-    private final UserAPI userAPI = new UserAPI();
-    private final User user = new User(email, password, name);
-
+public class TransitionToConstructorTest extends DefaultTest {
     private final String path;
 
     public TransitionToConstructorTest(String browserName, String path) {
@@ -41,10 +26,7 @@ public class TransitionToConstructorTest {
 
     @Parameterized.Parameters(name = "Проверка в {0}")
     public static Object[][] getPath() {
-        return new Object[][]{
-                {"Yandex browser", "C:\\Users\\isupo\\Downloads\\yandexdriver-23.1.0.2864-win64\\yandexdriver.exe"},
-                {"Chrome browser", "D:\\KateProject\\WebDriver\\bin\\chromedriver.exe"},
-        };
+        return new Object[][]{{"Yandex browser", "C:\\Users\\isupo\\Downloads\\yandexdriver-23.1.0.2864-win64\\yandexdriver.exe"}, {"Chrome browser", "D:\\KateProject\\WebDriver\\bin\\chromedriver.exe"},};
     }
 
     @Before
@@ -65,7 +47,7 @@ public class TransitionToConstructorTest {
         constructorPage.clickOnLoginButton();
 
         AuthPage authPage = new AuthPage(driver);
-        authPage.auth(email, password);
+        authPage.auth(user);
 
         constructorPage.clickOnPersonalAccount();
 
@@ -87,7 +69,7 @@ public class TransitionToConstructorTest {
         constructorPage.clickOnLoginButton();
 
         AuthPage authPage = new AuthPage(driver);
-        authPage.auth(email, password);
+        authPage.auth(user);
 
         constructorPage.clickOnPersonalAccount();
 
@@ -96,11 +78,4 @@ public class TransitionToConstructorTest {
 
         Assert.assertEquals(BASEURL, driver.getCurrentUrl());
     }
-
-    @After
-    public void tearDown() {
-        driver.quit();
-        userAPI.remove(user);
-    }
-
 }

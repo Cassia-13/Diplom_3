@@ -1,4 +1,4 @@
-package api;
+package site.nomoreparties.stellarburgers.api;
 
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
@@ -36,15 +36,14 @@ public class UserAPI {
     }
 
     @Step("User authorization. POST '/api/auth/login'")
-    public void login(User user) {
+    public boolean login(User user) {
         Response response = given().baseUri(BASEURL)
                 .contentType(ContentType.JSON)
                 .body(user)
                 .when()
                 .post("/api/auth/login");
 
-        response.then().assertThat().statusCode(200);
-
         user.setAccessToken(response.jsonPath().getString("accessToken"));
+        return response.statusCode() == 200;
     }
 }

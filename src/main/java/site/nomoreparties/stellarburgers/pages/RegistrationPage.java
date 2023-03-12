@@ -1,9 +1,10 @@
-package stellarBurgers;
+package site.nomoreparties.stellarburgers.pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import site.nomoreparties.stellarburgers.api.User;
 
 public class RegistrationPage extends HeaderElement {
     private final By name = new By.ByXPath(".//label[text()='Имя']/parent::div/input");
@@ -18,10 +19,10 @@ public class RegistrationPage extends HeaderElement {
     }
 
     @Step("User registration")
-    public void registration(String newName, String newEmail, String newPassword) {
-        clickOnAndEnter(name, newName);
-        clickOnAndEnter(email, newEmail);
-        clickOnAndEnter(password, newPassword);
+    public void registration(User user) {
+        clickOnAndEnter(name, user.getName());
+        clickOnAndEnter(email, user.getEmail());
+        clickOnAndEnter(password, user.getPassword());
 
         clickOn(registrationButton);
     }

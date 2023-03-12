@@ -1,10 +1,20 @@
-package api;
+package site.nomoreparties.stellarburgers.api;
 
 public class User {
     private String email;
     private String password;
     private String name;
     private String accessToken;
+
+    public boolean isNeedRemove() {
+        return needRemove;
+    }
+
+    public void setNeedRemove(boolean needRemove) {
+        this.needRemove = needRemove;
+    }
+
+    private boolean needRemove;
 
     public User(String email, String password, String name) {
         this.email = email;

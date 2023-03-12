@@ -1,9 +1,10 @@
-package stellarBurgers;
+package site.nomoreparties.stellarburgers.pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import site.nomoreparties.stellarburgers.api.User;
 
 public class AuthPage extends HeaderElement {
     private final By registrationButton = new By.ByXPath(".//a[text()='Зарегистрироваться']");
@@ -32,9 +33,9 @@ public class AuthPage extends HeaderElement {
     }
 
     @Step("User authorization")
-    public void auth(String newEmail, String newPassword) {
-        clickOnAndEnter(email, newEmail);
-        clickOnAndEnter(password, newPassword);
+    public void auth(User user) {
+        clickOnAndEnter(email, user.getEmail());
+        clickOnAndEnter(password, user.getPassword());
 
         clickOn(enterButton);
     }

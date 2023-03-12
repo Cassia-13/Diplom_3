@@ -1,4 +1,4 @@
-package stellarBurgers;
+package site.nomoreparties.stellarburgers.pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
